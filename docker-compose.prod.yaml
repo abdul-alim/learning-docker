@@ -21,7 +21,8 @@ services:
         ports:
             - "9000:9000"
         volumes:
-            - /home/ec2-user/webhooks/:/etc/webhook
+            - /home/ec2-user/webhooks:/etc/webhook
+            - /home/ec2-user/webhooks:/home/ec2-user/webhooks
             - /home/ec2-user/projects/learning-docker:/home/ec2-user/projects/learning-docker
 
     nginxmanager:
