@@ -1,8 +1,8 @@
 version: '3.9'
 
 services:
-    api: 
-        build: 
+    api:
+        build:
             context: .
             dockerfile: Dockerfile
             target: base
@@ -10,13 +10,14 @@ services:
             - ./src/:/home/node/app/src
             - ./nodemon.json:/home/node/app/nodemon.json
         command: npm run dev
-    nginx: 
-        image: nginx:latest
-        volumes:
-            - ./conf.d:/etc/nginx/conf.d
-        depends_on:
-            - api
-        expose: 
-            - '3000'
+    nginxmanager:
+        image: 'jc21/nginx-proxy-manager:latest'
+        restart: unless-stopped
         ports:
-            - '3000:3000'
+            # These ports are in format <host-port>:<container-port>
+            - '80:80' # Public HTTP Port
+            - '443:443' # Public HTTPS Port
+        volumes:
+            - ./data:/data
+            - ./letsencrypt:/etc/letsencrypt
+            - ./conf.d:/data/nginx/custom/
