@@ -5,7 +5,7 @@ const app = express();
 
 app.get('/', (req, res) => {
     res.send({
-        message: 'Webhook is awesome!',
+        message: 'Webhook is awesome! :)',
         host: os.hostname()
     });
 });
