@@ -5,7 +5,7 @@ const app = express();
 
 app.get('/', (req, res) => {
     res.send({
-        message: 'Webhook docker is awesome!: 2)',
+        message: 'Webhook docker is awesome!: 3)',
         host: os.hostname()
     });
 });
