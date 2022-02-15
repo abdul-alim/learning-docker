@@ -3,6 +3,6 @@ up:
 down:
 	docker compose down --remove-orphans
 up-prod:
-	docker compose -f docker-compose.prod.yaml up --build --scale api=5 -d
+	docker compose -f docker-compose.prod.yaml up --build --remove-orphans --scale api=1 -d
 connect:
 	./xconnect "${c}"

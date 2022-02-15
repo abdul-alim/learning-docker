@@ -7,14 +7,32 @@ services:
             dockerfile: Dockerfile
             target: production
         command: node build/index.js
+        restart: on-failure
+        depends_on:
+            -   webhook
+
+    webhook:
+        image: "almir/webhook"
+        command:
+            - -verbose
+            - -hooks=/etc/webhook/hooks.json
+            - -hotreload
+        container_name: webhook
+        ports:
+            - "9000:9000"
+        volumes:
+            - /home/ec2-user/webhooks/:/etc/webhook
+            - /home/ec2-user/projects/learning-docker:/home/ec2-user/projects/learning-docker
+
     nginxmanager:
         image: 'jc21/nginx-proxy-manager:latest'
-        restart: unless-stopped
+        restart: on-failure
         ports:
-            # These ports are in format <host-port>:<container-port>
             - '80:80' # Public HTTP Port
             - '443:443' # Public HTTPS Port
         volumes:
             - ./data:/data
             - ./letsencrypt:/etc/letsencrypt
             - ./conf.d:/data/nginx/custom/
+        depends_on:
+            - webhook
