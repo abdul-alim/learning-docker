@@ -13,6 +13,7 @@ services:
 
     webhook:
         image: "almir/webhook"
+        build: prod/.
         command:
             - -verbose
             - -hooks=/etc/webhook/hooks.json
@@ -20,6 +21,7 @@ services:
         container_name: webhook
         ports:
             - "9000:9000"
+
         volumes:
             - /home/ec2-user/webhooks:/etc/webhook
             - /home/ec2-user/webhooks:/home/ec2-user/webhooks
