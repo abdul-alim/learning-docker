@@ -11,21 +11,21 @@ services:
         depends_on:
             -   webhook
 
-    webhook:
-        image: "almir/webhook"
-        build: prod/.
-        command:
-            - -verbose
-            - -hooks=/etc/webhook/hooks.json
-            - -hotreload
-        container_name: webhook
-        ports:
-            - "9000:9000"
-
-        volumes:
-            - /home/ec2-user/webhooks:/etc/webhook
-            - /home/ec2-user/webhooks:/home/ec2-user/webhooks
-            - /home/ec2-user/projects/learning-docker:/home/ec2-user/projects/learning-docker
+#    webhook:
+#        image: "almir/webhook"
+#        build: prod/.
+#        command:
+#            - -verbose
+#            - -hooks=/etc/webhook/hooks.json
+#            - -hotreload
+#        container_name: webhook
+#        ports:
+#            - "9000:9000"
+#
+#        volumes:
+#            - /home/ec2-user/webhooks:/etc/webhook
+#            - /home/ec2-user/webhooks:/home/ec2-user/webhooks
+#            - /home/ec2-user/projects/learning-docker:/home/ec2-user/projects/learning-docker
 
     nginxmanager:
         image: 'jc21/nginx-proxy-manager:latest'
@@ -39,3 +39,6 @@ services:
             - ./conf.d:/data/nginx/custom/
         depends_on:
             - webhook
+        extra_hosts:
+              - "host.docker.internal:host-gateway"
+        network_mode: "host"
