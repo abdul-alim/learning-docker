@@ -20,5 +20,4 @@ services:
             - ./letsencrypt:/etc/letsencrypt
             - ./conf.d:/data/nginx/custom/
         extra_hosts:
-              - "host.docker.internal:host-gateway"
-        network_mode: "host"
+            - "host.docker.internal:host-gateway"
