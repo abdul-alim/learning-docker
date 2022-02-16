@@ -4,9 +4,14 @@ import os from "os";
 const app = express();
 
 app.get('/', (req, res) => {
+
+    var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+
+
     res.send({
         message: 'Webhook docker is awesome!: 4......)',
-        host: os.hostname()
+        host: os.hostname(),
+        ip: ip
     });
 });
 
